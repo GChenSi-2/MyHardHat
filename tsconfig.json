@@ -2,8 +2,16 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "commonjs",
+    "moduleResolution": "node16",
     "outDir": "./dist",
     "rootDir": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@contracts/*": ["contracts/*"],
+      "@deployments/*": ["ignition/deployments/*"],
+      "@frontend/*": ["frontend/*"],
+      "@types/*": ["types/*"]
+    },
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -11,16 +19,22 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "ignoreDeprecations": "6.0",
-    "types": []
+    "types": ["node"]
   },
   "include": [
     "./hardhat.config.ts",
     "./scripts/**/*",
     "./test/**/*",
-    "./typechain-types/**/*"
+    "./typechain-types/**/*",
+    "./types/**/*",
+    "./frontend/lib/**/*",
+    "./frontend/components/**/*",
+    "./frontend/app/providers.tsx"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "frontend/.next",
+    "frontend/out"
   ]
 }

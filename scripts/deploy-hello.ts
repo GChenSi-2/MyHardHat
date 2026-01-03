@@ -8,7 +8,7 @@ async function foo(){
   await contract.waitForDeployment();
   console.log(`HelloWorld deployed to: ${contract.target}`);
   return contract;
-}
+} 
 async function deploy() {
     return await foo();
 }
