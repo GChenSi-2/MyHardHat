@@ -208,3 +208,10 @@ Private Key: 0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0
 
 Account #19: 0x8626f6940e2eb28930efb4cef49b2d1f2c9c1199 (10000 ETH)
 Private Key: 0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e
+
+
+# 检查区块链状态脚本
+yarn hardhat run scripts/check-reset.ts --network localhost
+
+# 部署helloword合约到本地节点
+yarn hardhat run ./scripts/deploy-hello.ts --network localhost

@@ -22,7 +22,7 @@ describe("Counter", function () {
     const events = await counter.queryFilter(
       counter.filters.Increment(),
       deploymentBlockNumber,
-      "latest",
+      "latest"
     );
 
     // check that the aggregated events match the current value
