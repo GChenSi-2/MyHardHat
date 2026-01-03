@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-abb31056588cec8075f104622aafe5c72037add7",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/HelloWorld.sol": "project/contracts/HelloWorld.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/HelloWorld.sol": {
+        "content": "// SPDX-Liense-Identifier: UNLICENSED\r\npragma solidity ^0.8.28;\r\ncontract HelloWorld {\r\n    function greet() public pure returns (string memory) {\r\n        return \"Hello, World!\";\r\n    }\r\n}"
+      }
+    }
+  }
+}

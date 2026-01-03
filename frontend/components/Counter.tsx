@@ -38,11 +38,14 @@ export function Counter() {
     },
   });
 
-  const { writeContractAsync, isPending: isWriting } = useWriteContract();
+  const { mutateAsync: submitTransaction, isPending: isWriting } = useWriteContract();
 
   const receipt = useWaitForTransactionReceipt({
     hash: pendingHash,
     chainId: activeChainId,
+    query: {
+      enabled: Boolean(pendingHash),
+    },
   });
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export function Counter() {
     }
   }, [receipt.isSuccess, refetch]);
 
-  const isConfirming = receipt.isPending;
+  const isConfirming = Boolean(pendingHash) && receipt.isPending;
   const isBusy = isWriting || isConfirming;
 
   const displayValue = counterValue ? counterValue.toString() : '0';
@@ -72,7 +75,7 @@ export function Counter() {
     }
     try {
       setError(null);
-      const hash = await writeContractAsync({
+      const hash = await submitTransaction({
         address: counterAddress,
         abi: contracts.Counter.abi,
         functionName: 'inc',
@@ -92,7 +95,7 @@ export function Counter() {
     try {
       setError(null);
       const amount = parseIncrement();
-      const hash = await writeContractAsync({
+      const hash = await submitTransaction({
         address: counterAddress,
         abi: contracts.Counter.abi,
         functionName: 'incBy',
