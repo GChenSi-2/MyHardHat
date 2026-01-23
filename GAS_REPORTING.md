@@ -215,3 +215,12 @@ yarn hardhat run scripts/check-reset.ts --network localhost
 
 # 部署helloword合约到本地节点
 yarn hardhat run ./scripts/deploy-hello.ts --network localhost
+
+# 安装最新版本
+yarn add @openzeppelin/contracts
+
+# 安装特定版本
+yarn add @openzeppelin/contracts@5.0.0
+
+# 安装 4.x 版本
+yarn add @openzeppelin/contracts@^4.9.0

@@ -10,6 +10,10 @@ type ContractConfig = {
 const CONTRACTS: ContractConfig[] = [
   { name: "Counter", artifactPath: "artifacts/contracts/Counter.sol/Counter.json" },
   { name: "HelloWorld", artifactPath: "artifacts/contracts/HelloWorld.sol/HelloWorld.json" },
+  { name: "LSTToken", artifactPath: "artifacts/contracts/tokens/LSTToken.sol/LSTToken.json" },
+  { name: "LSTVault", artifactPath: "artifacts/contracts/StakingCore/LSTVault.sol/LSTVault.json" },
+  { name: "MockUniswapV2Pair", artifactPath: "artifacts/contracts/mocks/MockUniswapV2Pair.sol/MockUniswapV2Pair.json" },
+  { name: "UniswapV2SpotOracle", artifactPath: "artifacts/contracts/interfaces/oracle/UniswapV2SpotOracle.sol/UniswapV2SpotOracle.json" },
 ];
 
 async function loadJson<T>(absolutePath: string): Promise<T | null> {
