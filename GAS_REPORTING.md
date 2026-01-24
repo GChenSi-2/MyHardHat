@@ -224,3 +224,20 @@ yarn add @openzeppelin/contracts@5.0.0
 
 # 安装 4.x 版本
 yarn add @openzeppelin/contracts@^4.9.0
+
+# 測試Stakingadapter
+yarn compile
+yarn test test/MockStakingAdapter.ts
+
+# Staking時間綫示例
+t=0s:  User1 质押 100 tokens
+       totalStaked = 100
+       rewardRate = 1 token/秒
+
+t=10s: User1 pending = 10 tokens (10秒 × 1 token/秒 × 100/100)
+
+t=10s: User2 质押 100 tokens
+       totalStaked = 200
+
+t=20s: User1 pending = 15 tokens (10 + 10秒 × 1 token/秒 × 100/200)
+       User2 pending = 5 tokens (10秒 × 1 token/秒 × 100/200)

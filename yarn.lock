@@ -663,7 +663,21 @@
     typechain "^8.3.1"
     zod "^3.23.8"
 
-"@nomicfoundation/hardhat-utils@^3.0.1", "@nomicfoundation/hardhat-utils@^3.0.2", "@nomicfoundation/hardhat-utils@^3.0.5":
+"@nomicfoundation/hardhat-utils@^3.0.1", "@nomicfoundation/hardhat-utils@^3.0.5":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-utils/-/hardhat-utils-3.0.6.tgz#b960ccf8d1b8247b57817b8b3406691a384d0c25"
+  integrity sha512-AD/LPNdjXNFRrZcaAAewgJpdnHpPppZxo5p+x6wGMm5Hz4B3+oLf/LUzVn8qb4DDy9RE2c24l2F8vmL/w6ZuXg==
+  dependencies:
+    "@streamparser/json-node" "^0.0.22"
+    debug "^4.3.2"
+    env-paths "^2.2.0"
+    ethereum-cryptography "^2.2.1"
+    fast-equals "^5.4.0"
+    json-stream-stringify "^3.1.6"
+    rfdc "^1.3.1"
+    undici "^6.16.1"
+
+"@nomicfoundation/hardhat-utils@^3.0.2":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-utils/-/hardhat-utils-3.0.5.tgz#b04fbde1d0914939b3c4b982486cb3dcb117a6f6"
   integrity sha512-5zkQSuSxkwK7fQxKswJ1GGc/3AuWBSmxA7GhczTPLx28dAXQnubRU8nA48SkCkKesJq5x4TROP+XheSE2VkLUA==
@@ -1643,7 +1657,7 @@ eventemitter3@5.0.1:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
   integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
 
-fast-equals@^5.0.1:
+fast-equals@^5.0.1, fast-equals@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/fast-equals/-/fast-equals-5.4.0.tgz#b60073b8764f27029598447f05773c7534ba7f1e"
   integrity sha512-jt2DW/aNFNwke7AUd+Z+e6pz39KO5rzdbbFCg2sGafS4mk13MI7Z8O5z9cADNn5lhGODIgLwug6TZO2ctf7kcw==
@@ -3101,9 +3115,9 @@ undici-types@~7.16.0:
   integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
 
 undici@^6.16.1:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-6.22.0.tgz#281adbc157af41da8e75393c9d75a1b788811bc3"
-  integrity sha512-hU/10obOIu62MGYjdskASR3CUAiYaFTtC9Pa6vHyf//mAipSvSQg6od2CnJswq7fvzNS3zJhxoRkgNVaHurWKw==
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-6.23.0.tgz#7953087744d9095a96f115de3140ca3828aff3a4"
+  integrity sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==
 
 universalify@^0.1.0:
   version "0.1.2"
