@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { network } from "hardhat";
-import { time } from "@nomicfoundation/hardhat-network-helpers";
 const { ethers } = await network.connect();
+const { networkHelpers } = await network.connect();
 
 describe("MockStakingAdapter - Time-based Rewards", function () {
   it("Should accumulate rewards over time", async function () {
@@ -42,7 +42,7 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
     ));
 
     // 6. 等待 10 秒
-    await time.increase(10);
+    await networkHelpers.time.increase(60);
     
     let pending = await adapter.pendingRewards(user1.address);
     console.log("\n等待 10 秒后:");
@@ -61,7 +61,7 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
     console.log("Total staked:", ethers.formatEther(await adapter.totalStaked()));
 
     // 8. 再等待 10 秒
-    await time.increase(10);
+    await networkHelpers.time.increase(10);
 
     let pending1 = await adapter.pendingRewards(user1.address);
     let pending2 = await adapter.pendingRewards(user2.address);
@@ -93,7 +93,7 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
     ));
 
     // 11. 再等待 10 秒
-    await time.increase(10);
+    await networkHelpers.time.increase(10);
 
     pending1 = await adapter.pendingRewards(user1.address);
     pending2 = await adapter.pendingRewards(user2.address);
