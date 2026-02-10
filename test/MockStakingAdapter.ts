@@ -1,10 +1,9 @@
 import { expect } from "chai";
 import { network } from "hardhat";
-const { ethers } = await network.connect();
-const { networkHelpers } = await network.connect();
 
 describe("MockStakingAdapter - Time-based Rewards", function () {
   it("Should accumulate rewards over time", async function () {
+    const { ethers, networkHelpers } = await network.connect();
     const [owner, user1, user2] = await ethers.getSigners();
 
     // 1. 部署代币
@@ -42,7 +41,8 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
     ));
 
     // 6. 等待 10 秒
-    await networkHelpers.time.increase(60);
+    await networkHelpers.time.increase(10);
+    // await networkHelpers.mine(1); // 关键：推进时间后挖一个新区块，触发 timestamp 生效
     
     let pending = await adapter.pendingRewards(user1.address);
     console.log("\n等待 10 秒后:");
@@ -62,6 +62,7 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
 
     // 8. 再等待 10 秒
     await networkHelpers.time.increase(10);
+    // await networkHelpers.mine(1); // 关键：推进时间后挖一个新区块，触发 timestamp 生效
 
     let pending1 = await adapter.pendingRewards(user1.address);
     let pending2 = await adapter.pendingRewards(user2.address);
@@ -94,7 +95,7 @@ describe("MockStakingAdapter - Time-based Rewards", function () {
 
     // 11. 再等待 10 秒
     await networkHelpers.time.increase(10);
-
+    // await networkHelpers.mine(1); // 关键：推进时间后挖一个新区块，触发 timestamp 生效
     pending1 = await adapter.pendingRewards(user1.address);
     pending2 = await adapter.pendingRewards(user2.address);
 
