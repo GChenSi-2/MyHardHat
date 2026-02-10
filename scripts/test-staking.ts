@@ -15,18 +15,42 @@ async function main() {
   // ========================================
   // 配置：填入部署的合约地址
   // ========================================
-  const VAULT_ADDRESS = "0x8bEe2037448F096900Fd9affc427d38aE6CC0350";
-  const MLST_ADDRESS = "0x72A2e04a66336BC6A394a7808402968D65e9335A";
-  const TST_ADDRESS = "0x942ED2fa862887Dc698682cc6a86355324F0f01e";
-  const ADAPTER_ADDRESS = "0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4";
-  const ROUTER_ADDRESS = "0x0aec7c174554AF8aEc3680BB58431F6618311510";
-  const PAIR_ADDRESS = "0x8e264821AFa98DD104eEcfcfa7FD9f8D8B320adA";
+  const VAULT_ADDRESS = "0x525C7063E7C20997BaaE9bDa922159152D0e8417";
+  const MLST_ADDRESS = "0x4f4588Ed715A88420222a08c74e8D8c0f432Df96";
+  const TST_ADDRESS = "0x38a024C0b412B9d1db8BC398140D00F5Af3093D4";
+  const ADAPTER_ADDRESS = "0x5fc748f1FEb28d7b76fa1c6B07D8ba2d5535177c";
+  const ROUTER_ADDRESS = "0x40918Ba7f132E0aCba2CE4de4c4baF9BD2D7D849";
+  const PAIR_ADDRESS = "0xF32D39ff9f6Aa7a7A64d7a4F00a54826Ef791a55";
+
+  // WETH ABI needed for deposit (wrap) functionality
+  const WETH_ABI = [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function decimals() view returns (uint8)",
+    "function balanceOf(address) view returns (uint256)",
+    "function allowance(address, address) view returns (uint256)",
+    "function approve(address, uint256) returns (bool)",
+    "function transfer(address, uint256) returns (bool)",
+    "function transferFrom(address, address, uint256) returns (bool)",
+    "function deposit() payable",
+    "function withdraw(uint256)"
+  ];
 
   // 获取合约实例
   const vault = await ethers.getContractAt("LSTVault", VAULT_ADDRESS);
   const mlst = await ethers.getContractAt("LSTToken", MLST_ADDRESS);
-  const tst = await ethers.getContractAt("MockERC20", TST_ADDRESS);
+  // Using WETH ABI for Staking Token
+  const tst = await ethers.getContractAt(WETH_ABI, TST_ADDRESS);
   const adapter = await ethers.getContractAt("MockStakingAdapter", ADAPTER_ADDRESS);
+
+  console.log("=" .repeat(70));
+  console.log("🔄 步骤 0: Wrap ETH (获取 WETH/TST)");
+  console.log("=" .repeat(70));
+  // Wrap some ETH to get WETH for staking
+  const wrapAmount = ethers.parseEther("2000");
+  console.log("⚙️  Wrapping", ethers.formatEther(wrapAmount), "ETH...");
+  await (await tst.deposit({ value: wrapAmount })).wait();
+  console.log("✅ Wrapped ETH to WETH");
 
   console.log("=" .repeat(70));
   console.log("📊 初始状态");
@@ -111,6 +135,9 @@ async function main() {
   const claimed = mlstAfter - mlstBefore;
   console.log("领取后 mLST 余额:", ethers.formatEther(mlstAfter));
   console.log("🎁 实际领取:", ethers.formatEther(claimed), "mLST\n");
+    
+  const earnedAfterClaim = await adapter.earned(user.address);
+  console.log("🎁 领取后累积奖励:", ethers.formatEther(earnedAfterClaim), "mLST");
 
   // ========================================
   // 步骤 5: 取消质押
@@ -164,7 +191,7 @@ async function main() {
   console.log("💧 增加流动性...");
   const router = await ethers.getContractAt("MockUniswapV2Router02", ROUTER_ADDRESS);
   const wethAddress = await router.WETH();
-  const weth = await ethers.getContractAt("MockERC20", wethAddress);
+  const weth = await ethers.getContractAt(WETH_ABI, wethAddress);
   const pair = await ethers.getContractAt("MockUniswapV2Pair", PAIR_ADDRESS);
 
   const addMlst = ethers.parseEther("10000"); // 增加 10,000 mLST
@@ -199,6 +226,7 @@ async function main() {
   const deadline = Math.floor(Date.now() / 1000) + 3600; // 1小时后过期
   
   const oracleAddress = await vault.oracle();
+  console.log("Using Oracle at:", oracleAddress);
   const oracle = await ethers.getContractAt("UniswapV2SpotOracle", oracleAddress);
   const quote = await oracle.quoteEthOut(MLST_ADDRESS, swapAmount);
   const minEthOut = quote * 9800n / 10000n;

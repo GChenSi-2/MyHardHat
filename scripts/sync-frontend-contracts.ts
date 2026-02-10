@@ -14,6 +14,9 @@ const CONTRACTS: ContractConfig[] = [
   { name: "LSTVault", artifactPath: "artifacts/contracts/StakingCore/LSTVault.sol/LSTVault.json" },
   { name: "MockUniswapV2Pair", artifactPath: "artifacts/contracts/mocks/MockUniswapV2Pair.sol/MockUniswapV2Pair.json" },
   { name: "UniswapV2SpotOracle", artifactPath: "artifacts/contracts/interfaces/oracle/UniswapV2SpotOracle.sol/UniswapV2SpotOracle.json" },
+  { name: "MockERC20", artifactPath: "artifacts/contracts/mocks/MockERC20.sol/MockERC20.json" },
+  { name: "MockStakingAdapter", artifactPath: "artifacts/contracts/mocks/MockStakingAdapter.sol/MockStakingAdapter.json" },
+  { name: "MockUniswapV2Router02", artifactPath: "artifacts/contracts/mocks/MockUniswapV2Router02.sol/MockUniswapV2Router02.json" },
 ];
 
 async function loadJson<T>(absolutePath: string): Promise<T | null> {

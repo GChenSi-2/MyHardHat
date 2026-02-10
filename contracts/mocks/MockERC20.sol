@@ -33,4 +33,21 @@ contract MockERC20 is ERC20 {
     function burn(address from, uint256 amount) external {
         _burn(from, amount);
     }
+
+    /// @notice WETH-like deposit
+    function deposit() public payable {
+        _mint(msg.sender, msg.value);
+        emit Transfer(address(0), msg.sender, msg.value);
+    }
+
+    /// @notice WETH-like withdraw
+    function withdraw(uint256 amount) public {
+        _burn(msg.sender, amount);
+        payable(msg.sender).transfer(amount);
+        emit Transfer(msg.sender, address(0), amount);
+    }
+
+    receive() external payable {
+        deposit();
+    }
 }

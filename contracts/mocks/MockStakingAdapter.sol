@@ -7,6 +7,14 @@ contract MockStakingAdapter {
     IERC20 public immutable stakingToken;
     IERC20 public immutable rewardToken;
     
+    // 自定义错误
+    error ZeroAmount();
+    error InsufficientAllowance(uint256 required, uint256 available);
+    error TransferFailed();
+    error InsufficientBalance();
+    error NoRewards();
+    error RewardTransferFailed();
+    
     // 全局状态
     uint256 public rewardRate;              // 每秒发放的奖励数量
     uint256 public lastUpdateTime;          // 上次更新奖励的时间
@@ -80,13 +88,18 @@ contract MockStakingAdapter {
 
     /// @notice 质押代币
     function stake(uint256 amount) external updateReward(msg.sender) {
-        require(amount > 0, "ZERO_AMOUNT");
+        if (amount == 0) revert ZeroAmount();
+        
+        // 检查 allowance
+        uint256 allowance = stakingToken.allowance(msg.sender, address(this));
+        if (allowance < amount) {
+            revert InsufficientAllowance(amount, allowance);
+        }
         
         // 转入质押代币
-        require(
-            stakingToken.transferFrom(msg.sender, address(this), amount),
-            "TRANSFER_FAILED"
-        );
+        if (!stakingToken.transferFrom(msg.sender, address(this), amount)) {
+            revert TransferFailed();
+        }
         
         _stakedBalances[msg.sender] += amount;
         totalStaked += amount;
@@ -96,14 +109,14 @@ contract MockStakingAdapter {
 
     /// @notice 取消质押
     function unstake(uint256 amount) external updateReward(msg.sender) {
-        require(amount > 0, "ZERO_AMOUNT");
-        require(_stakedBalances[msg.sender] >= amount, "INSUFFICIENT_BALANCE");
+        if (amount == 0) revert ZeroAmount();
+        if (_stakedBalances[msg.sender] < amount) revert InsufficientBalance();
         
         _stakedBalances[msg.sender] -= amount;
         totalStaked -= amount;
         
         // 返还质押代币
-        require(stakingToken.transfer(msg.sender, amount), "TRANSFER_FAILED");
+        if (!stakingToken.transfer(msg.sender, amount)) revert TransferFailed();
         
         emit Unstaked(msg.sender, amount);
     }
@@ -121,12 +134,12 @@ contract MockStakingAdapter {
     /// @notice 领取奖励
     function claimRewards() external updateReward(msg.sender) returns (uint256 gained) {
         gained = _rewards[msg.sender];
-        require(gained > 0, "NO_REWARDS");
+        if (gained == 0) revert NoRewards();
         
         _rewards[msg.sender] = 0;
         
         // 转出奖励代币
-        require(rewardToken.transfer(msg.sender, gained), "REWARD_TRANSFER_FAILED");
+        if (!rewardToken.transfer(msg.sender, gained)) revert RewardTransferFailed();
         
         emit RewardsClaimed(msg.sender, gained);
     }
@@ -142,10 +155,9 @@ contract MockStakingAdapter {
 
     /// @notice 给合约充值奖励代币（测试用）
     function fundRewards(uint256 amount) external {
-        require(
-            rewardToken.transferFrom(msg.sender, address(this), amount),
-            "TRANSFER_FAILED"
-        );
+        if (!rewardToken.transferFrom(msg.sender, address(this), amount)) {
+            revert TransferFailed();
+        }
     }
 
     /// @notice 查询合约中的奖励代币余额

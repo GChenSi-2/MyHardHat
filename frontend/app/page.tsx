@@ -2,6 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { Counter } from "@/components/Counter";
 import { HelloWorld } from "@/components/HelloWorld";
+import { StakingTest } from "@/components/StakingTest";
 
 export default function Home() {
   return (
@@ -16,9 +17,13 @@ export default function Home() {
         <ConnectButton chainStatus="icon" showBalance={false} />
       </header>
 
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Counter />
-        <HelloWorld />
+      <section className="flex flex-col gap-6">
+        <StakingTest />
+        
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <Counter />
+            <HelloWorld />
+        </div>
       </section>
     </main>
   );

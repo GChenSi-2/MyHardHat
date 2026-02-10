@@ -12,9 +12,9 @@ async function main() {
   console.log();
 
   // 合约地址
-  const TST_ADDRESS = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
-  const MLST_ADDRESS = "0x856e4424f806D16E8CBC702B3c0F2ede5468eae5";
-  const ADAPTER_ADDRESS = "0x0165878A594ca255338adfa4d48449f69242Eb8F";
+  const TST_ADDRESS = "0x942ED2fa862887Dc698682cc6a86355324F0f01e";
+  const MLST_ADDRESS = "0x72A2e04a66336BC6A394a7808402968D65e9335A";
+  const ADAPTER_ADDRESS = "0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4";
 
   const tst = await ethers.getContractAt("MockERC20", TST_ADDRESS);
   const mlst = await ethers.getContractAt("LSTToken", MLST_ADDRESS);

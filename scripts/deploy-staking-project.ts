@@ -39,14 +39,23 @@ async function main() {
   console.log("   📝 mLST Token:", lstTokenAddress, "\n");
 
   // ========================================
-  // 步骤 2: 部署 MockERC20 作为 Staking Token
+  // 步骤 2: 部署 MockERC20 (Staking Token - WETH)
   // ========================================
-  console.log("📦 [2/7] 部署 MockERC20 (Staking Token)...");
+  console.log("📦 [2/7] 部署 MockERC20 (Local WETH)...");
   const MockERC20 = await ethers.getContractFactory("MockERC20");
-  const stakingToken = await MockERC20.deploy("Test Staking Token", "TST", 18);
+  const stakingToken = await MockERC20.deploy("Wrapped Ether", "WETH", 18);
   await stakingToken.waitForDeployment();
   const stakingTokenAddress = await stakingToken.getAddress();
-  console.log("✅ MockERC20 (Staking Token) 部署成功:", stakingTokenAddress, "\n");
+  console.log("✅ Local WETH 部署成功:", stakingTokenAddress, "\n");
+  
+  // 使用本地 WETH 作为 Staking Token
+  // const stakingTokenAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"; 
+  // console.log("👉 使用本地 WETH 作为 Staking Token:", stakingTokenAddress, "\n");
+  
+  // 使用本地 WETH 作为 Staking Token
+  // const stakingTokenAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"; 
+  // console.log("👉 使用本地 WETH 作为 Staking Token:", stakingTokenAddress, "\n");
+
 
   // ========================================
   // 步骤 3: 部署 MockStakingAdapter (使用 LSTToken 作为 reward)
@@ -87,7 +96,7 @@ async function main() {
   const transferTx = await lstToken.transfer(adapterAddress, ethers.parseEther("100000"));
   await transferTx.wait();
   console.log("   ✅ 奖励池充值成功");
-  console.log("   📊 Deployer 自动获得 10,000,000 TST（构造函数铸造）");
+  // console.log("   📊 Deployer 自动获得 10,000,000 TST（构造函数铸造）");
   
   // 将 adapter 设置到 vault
   console.log("   ⚙️  设置 Adapter 到 Vault...");
@@ -98,12 +107,17 @@ async function main() {
   // ========================================
   // 步骤 4: 部署 MockERC20 作为 WETH
   // ========================================
+  /*
   console.log("📦 [4/8] 部署 MockERC20 (WETH)...");
   const MockWETH = await ethers.getContractFactory("MockERC20");
   const weth = await MockWETH.deploy("Wrapped Ether", "WETH", 18);
   await weth.waitForDeployment();
   const wethAddress = await weth.getAddress();
   console.log("✅ MockERC20 (WETH) 部署成功:", wethAddress, "\n");
+  */
+  // 使用相同的 WETH 地址
+  const wethAddress = stakingTokenAddress;
+  const weth = await ethers.getContractAt("MockERC20", wethAddress);
 
   // ========================================
   // 步骤 5: 部署 MockUniswapV2Router02

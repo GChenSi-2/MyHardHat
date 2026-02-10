@@ -8,6 +8,7 @@
     "test": "hardhat test",
     "test:gas": "hardhat test test/Counter.ignition.ts",
     "test:staking": "hardhat run scripts/test-staking.ts --network localhost",
+    "test:staking:simple": "hardhat run scripts/test-staking-simple.ts --network localhost",
     "node": "hardhat node",
     "deploy": "hardhat run scripts/deploy.ts",
     "deploy:gas": "hardhat run scripts/deploy-with-gas-tracking.ts",
