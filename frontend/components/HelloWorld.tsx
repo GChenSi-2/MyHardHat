@@ -35,7 +35,7 @@ export function HelloWorld() {
     },
   });
 
-  const displayMessage = greeting ?? '—';
+  const displayMessage = typeof greeting === 'string' ? greeting : '-';
   const errorMessage = error instanceof Error ? error.message : undefined;
 
   return (
@@ -52,9 +52,9 @@ export function HelloWorld() {
       </header>
 
       <div>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">sayHello response</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">greet response</p>
         <p className="text-lg font-medium text-zinc-900 dark:text-zinc-50">
-          {isPending ? 'Loading…' : displayMessage}
+          {isPending ? 'Loading...' : displayMessage}
         </p>
       </div>
 

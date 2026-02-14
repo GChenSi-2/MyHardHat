@@ -242,7 +242,7 @@ t=10s: User2 质押 100 tokens
 t=20s: User1 pending = 15 tokens (10 + 10秒 × 1 token/秒 × 100/200)
        User2 pending = 5 tokens (10秒 × 1 token/秒 × 100/200)
 
-# 合約成功部署後顯示
+# 合約成功部署後顯示例子
 部署的合约地址：
 合约	地址
 LSTVault	0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
